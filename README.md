@@ -16,5 +16,6 @@ npm create vite@latest .
 
 ```
 
+- tailwind CSS
 - react-router-dom
 - axios
