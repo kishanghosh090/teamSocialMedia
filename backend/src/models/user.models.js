@@ -39,62 +39,8 @@ const UserSchema = new Schema ({
         ref: 'UserSchema'
     }],
     posts: [{
-        userId: {
-            type: mongoose.Schema.Type.ObjectId,
-            ref: 'UserSchema',
-            required: true 
-        },
-        image: {
-            type: String // Correct here
-        },
-        title: {
-            type: String,
-            required: true 
-        },
-        description: {
-            type: String,
-            required: true 
-        },
-        likes: {
-            type: Number
-        },
-        date: {
-            type: Date,
-            default: Date.now
-        },
-        comments: [{
-            userId: {
-                type: mongoose.Schema.Type.ObjectId,
-                ref: 'UserSchema'
-            },
-            date: {
-                type: Date,
-                default: Date.now
-            },
-            message: {
-                type: String,
-                required: true 
-            },
-            likes: {
-                type: Number,
-            },
-            replies: [{
-                userId: {
-                    type: mongoose.Schema.Type.ObjectId,
-                    ref: 'UserSchema'
-                },
-                date: {
-                    type: Date,
-                    default: Date.now
-                },
-                likes: {
-                    type: Number
-                },
-                message: {
-                    type: String,
-                    required: true
-                }
-            }]
-        }]
+        type: mongoose.Schema.Type.ObjectId,
+        ref: 'UserSchema',
+        required: true 
     }]
 })
