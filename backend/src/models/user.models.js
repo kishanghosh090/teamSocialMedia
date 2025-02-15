@@ -39,8 +39,14 @@ const UserSchema = new Schema ({
         ref: 'UserSchema'
     }],
     posts: [{
-        type: mongoose.Schema.Type.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'UserSchema',
         required: true 
-    }]
-})
+    }],
+    public: {
+        type: String,
+        required: true
+    }
+});
+
+module.exports = mongoose.model('user', UserSchema);
