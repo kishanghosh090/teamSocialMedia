@@ -1,38 +1,41 @@
-const mongoose = require("mongoose");
-const UserSchema = require('./user.models'); // Is it correct
-const { Schema } = mongoose;
+import mongoose from "mongoose";
 
-const PostSchema = new Schema ({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: UserSchema  // Correct here if required
+const PostSchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User", // Correct here if required
+  },
+  image: {
+    type: String,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    image: {
-        type: String,
+  ],
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId, // Jisne Comment Kia
+      ref: "User", // Correct here if required
     },
-    title: {
-        type: String,
-        required: true 
-    },
-    description: {
-        type: String,
-        required: true 
-    },
-    likes: {
-        type: Number,
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    },
-    comments: [{
-        type: mongoose.Schema.Types.ObjectId, // Jisne Comment Kia
-        ref: UserSchema  // Correct here if required
-    }],
-    public: {
-        type: String,
-        required: true
-    }
+  ],
+  publicId: {
+    type: String,
+    required: true,
+  },
 });
 
-module.exports = mongoose.model('post', PostSchema);
+export const Post = mongoose.model("post", PostSchema);

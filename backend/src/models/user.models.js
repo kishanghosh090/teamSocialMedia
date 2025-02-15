@@ -1,7 +1,6 @@
-const mongoose = require("mongoose");
-const { Schema } = mongoose;
+import mongoose from "mongoose";
 
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
   userName: {
     type: String,
     required: [true, "Username is required"],
@@ -18,6 +17,9 @@ const UserSchema = new Schema({
     type: String, // Please Correct Here
     default: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
   },
+  publicId: {
+    type: String,
+  },
   dob: {
     type: Date,
   },
@@ -32,61 +34,22 @@ const UserSchema = new Schema({
   followers: [
     {
       type: mongoose.Schema.Types.ObjectsId,
-      ref: "UserSchema",
+      ref: "User",
     },
   ],
   following: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "UserSchema",
+      ref: "User",
     },
   ],
   posts: [
     {
       type: mongoose.Schema.Type.ObjectId,
-      ref: "UserSchema",
+      ref: "Post",
       required: true,
     },
-<<<<<<< HEAD
   ],
 });
 
 export const User = mongoose.model("User", UserSchema);
-=======
-    profilePic: {
-        type: String, // Please Correct Here
-    },
-    dob: {
-        type: Date,
-        required: true 
-    },
-    Gender: {
-        type: String,
-        enum: ['Male', 'Female', 'Other'], // Is that correct or should we add radio buttons only
-        required: true
-    },
-    phone: {
-        type: Number,
-        required: true // Take a look here
-    },
-    followers: [{
-        type: mongoose.Schema.Types.ObjectsId,
-        ref: 'UserSchema'
-    }],
-    following: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserSchema'
-    }],
-    posts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserSchema',
-        required: true 
-    }],
-    public: {
-        type: String,
-        required: true
-    }
-});
-
-module.exports = mongoose.model('user', UserSchema);
->>>>>>> refs/remotes/origin/main
