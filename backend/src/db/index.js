@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
-import { DB_NAME } from "../constants";
+import { DB_NAME } from "../constants.js";
+
+
 
 // Check if MONGO_URI is defined
 if (!process.env.MONGODB_URI || !DB_NAME) {
@@ -10,7 +12,7 @@ if (!process.env.MONGODB_URI || !DB_NAME) {
 const connectDB = async () => {
   try {
     const connectionInstance = await mongoose.connect(
-      `${process.env.MONGO_URI}/${DB_NAME}`
+      `${process.env.MONGODB_URI}/${DB_NAME}`
     );
 
     if (!connectionInstance) {

@@ -26,7 +26,7 @@ app.use("/api/v1/users", userRoute);
 app.use("/api/v1/posts", postRoute);
 
 // error middlewares-----------------------
-app.use((error, _, res, _) => {
+app.use((error, req, res, next) => {
   if (error instanceof ApiError) {
     return res.json(new ApiError(error.status, error.message));
   }
