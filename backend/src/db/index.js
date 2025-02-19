@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { DB_NAME } from "../constants";
+import { DB_NAME } from "../constants.js";
 
 // Check if MONGO_URI is defined
 if (!process.env.MONGODB_URI || !DB_NAME) {
