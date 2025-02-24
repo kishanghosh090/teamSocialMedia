@@ -10,7 +10,7 @@ if (!process.env.MONGODB_URI || !DB_NAME) {
 const connectDB = async () => {
   try {
     const connectionInstance = await mongoose.connect(
-      `${process.env.MONGO_URI}/${DB_NAME}`
+      `${process.env.MONGODB_URI}/${DB_NAME}`
     );
 
     if (!connectionInstance) {
