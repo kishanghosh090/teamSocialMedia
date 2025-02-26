@@ -28,14 +28,40 @@ const register = async (req, res, next) => {
 };
 
 // login controller
-const login = (req, res, next) => {
-    
+const login = async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+      let user = await user.findOne({ email : email });
+
+      if (!user) {
+        return next(new ApiError(500, error.message || "User doesn't exist"));
+      }
+
+      // Compare the password entered by the user
+      if (req.password !== user.password){
+        return res.status(404).send("Invalid Cradentials");
+      }
+
+      return res.json({user});
+
+    } catch (error) {
+      return next(new ApiError(500, error.message || "Internal Server Error"));
+    }
 };
 
 // google login
 const googleLogin = (req, res, next) => {};
 
 // edit profile
-const editProfile = (req, res, next) => {};
+const editProfile = (req, res, next) => {
+  try {
+    const data = req.body;
+    if ([data.userName, data.email, data.password].some(value = !value())){
+      return next(new ApiError(500, error.message || "Internal Server Error"));
+    }
+  } catch (error) {
+    return next(new ApiError(500, error.message || "Internal Server Error"));
+  }
+};
 
 export { register, login, googleLogin, editProfile };
