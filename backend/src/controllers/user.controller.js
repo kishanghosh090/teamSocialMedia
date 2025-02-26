@@ -1,6 +1,6 @@
-import { User } from "../models/user.models";
-import ApiError from "../utils/ApiError";
-import ApiResponse from "../utils/ApiResponse";
+import { User } from "../models/user.models.js";
+import ApiError from "../utils/ApiError.js";
+import ApiResponse from "../utils/ApiResponse.js";
 
 // register controller
 const register = async (req, res, next) => {
