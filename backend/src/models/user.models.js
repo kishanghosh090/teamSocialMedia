@@ -27,9 +27,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ["Male", "Female", "Other"], // Is that correct or should we add radio buttons only
   },
+
   phone: {
     type: Number,
   },
+
   followers: [
     {
       type: mongoose.Schema.Types.ObjectId,
