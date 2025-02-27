@@ -31,18 +31,18 @@ const register = async (req, res, next) => {
 const login = async (req, res, next) => {
     try {
       const { email, password } = req.body;
-      let user = await user.findOne({ email : email });
+      let user = await User.findOne({ email : email });
 
       if (!user) {
         return next(new ApiError(500, error.message || "User doesn't exist"));
       }
 
       // Compare the password entered by the user
-      if (req.password !== user.password){
+      if (password !== user.password){
         return res.status(404).send("Invalid Cradentials");
       }
 
-      return res.json({user});
+      return res.status(201).json(new ApiResponse(201, user, "Login Successful"));
 
     } catch (error) {
       return next(new ApiError(500, error.message || "Internal Server Error"));
@@ -53,12 +53,25 @@ const login = async (req, res, next) => {
 const googleLogin = (req, res, next) => {};
 
 // edit profile
-const editProfile = (req, res, next) => {
+const editProfile = async (req, res, next) => {
   try {
-    const data = req.body;
-    if ([data.userName, data.email, data.password].some(value = !value())){
-      return next(new ApiError(500, error.message || "Internal Server Error"));
+    const id = req.params.id;
+    const { userName, email, password, profilePic, dob, gender, phone } = req.body;
+    if([userName, email, password].some((value) => !value)){
+      return next(new ApiError(500, error.message || "Please provide valid userName, email and password"));
     }
+
+    const newUser = {};
+
+    if(profilePic){ newUser.profilePic = profilePic; }
+    if(dob){ newUser.dob = dob; }
+    if(gender){ newUser.gender = gender; }
+    if(phone){ newUser.phone = phone; }
+
+    // find user and update
+    let user = await User.findByIdAndUpdate( id, { $set: newUser }, { new: true });
+    return res.status(201).json(new ApiResponse(201, user, "User Profile Updated"));
+
   } catch (error) {
     return next(new ApiError(500, error.message || "Internal Server Error"));
   }

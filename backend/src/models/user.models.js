@@ -23,13 +23,12 @@ const UserSchema = new mongoose.Schema({
   dob: {
     type: Date,
   },
-  Gender: {
+  gender: {
     type: String,
     enum: ["Male", "Female", "Other"], // Is that correct or should we add radio buttons only
   },
   phone: {
     type: Number,
-    required: true, // Take a look here
   },
   followers: [
     {
