@@ -28,14 +28,53 @@ const register = async (req, res, next) => {
 };
 
 // login controller
-const login = (req, res, next) => {
-    
+const login = async (req, res, next) => {
+    try {
+      const { email, password } = req.body;
+      let user = await User.findOne({ email : email });
+
+      if (!user) {
+        return next(new ApiError(500, error.message || "User doesn't exist"));
+      }
+
+      // Compare the password entered by the user
+      if (password !== user.password){
+        return res.status(404).send("Invalid Cradentials");
+      }
+
+      return res.status(201).json(new ApiResponse(201, user, "Login Successful"));
+
+    } catch (error) {
+      return next(new ApiError(500, error.message || "Internal Server Error"));
+    }
 };
 
 // google login
 const googleLogin = (req, res, next) => {};
 
 // edit profile
-const editProfile = (req, res, next) => {};
+const editProfile = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const { userName, email, password, profilePic, dob, gender, phone } = req.body;
+    if([userName, email, password].some((value) => !value)){
+      return next(new ApiError(500, error.message || "Please provide valid userName, email and password"));
+    }
+
+    const newUser = {};
+
+    if(profilePic){ newUser.profilePic = profilePic; }
+    if(dob){ newUser.dob = dob; }
+    if(gender){ newUser.gender = gender; }
+    if(phone){ newUser.phone = phone; }
+
+    // find user and update
+    let user = await User.findByIdAndUpdate( id, { $set: newUser }, { new: true });
+    return res.status(201).json(new ApiResponse(201, user, "User Profile Updated"));
+
+  } catch (error) {
+    return next(new ApiError(500, error.message || "Internal Server Error"));
+  }
+};
 
 export { register, login, googleLogin, editProfile };
