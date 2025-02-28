@@ -15,8 +15,8 @@ import {
 const router = express.Router();
 
 router.route("/getAllPosts").get(getAllPosts);
-router.route("/createPost").post(createPost);
-router.route("/updatePost").post(updatePost);
+router.route("/createPost").post(createPost); // <-------
+router.route("/updatePost/:id").post(updatePost); // <-------
 router.route("/deletePost").post(deletePost);
 router.route("/likePost").post(likeOrDislike);
 router.route("/createComment").post(createComment);
