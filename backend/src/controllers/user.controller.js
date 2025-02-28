@@ -38,7 +38,7 @@ const login = async (req, res, next) => {
       }
 
       // Compare the password entered by the user
-      if (password !== user.password){
+      if (password !== user?.password){
         return res.status(404).send("Invalid Cradentials");
       }
 
