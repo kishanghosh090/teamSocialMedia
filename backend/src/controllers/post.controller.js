@@ -47,7 +47,16 @@ const updatePost = async (req, res, next) => {
 };
 
 // delete user post controller
-const deletePost = (req, res, next) => {};
+const deletePost = async (req, res, next) => {
+    const id = req.params.id;
+    // authenticate user
+    const deletePost = Post.findByIdAndDelete(id);
+    if(!deletePost){
+        return next(new ApiError(500, error.message || "Internal Server Error"));
+    }
+
+    return res.status(201).json(new ApiError(201, deletePost, "Post Deleted"));
+};
 
 // get all user posts
 const getAllPosts = async (req, res, next) => {
